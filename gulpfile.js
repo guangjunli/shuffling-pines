@@ -9,7 +9,9 @@ var connect = require('gulp-connect');
 // *******************************************
 
 gulp.task('buildApp', function(){
-  return gulp.src('src/js/**/*.js')
+  return gulp.src([
+    'src/js/guest.js',
+    'src/js/app.js'])
     .pipe(concat('app.js'))
     .pipe(uglify())
     .pipe(gulp.dest('dist'))
@@ -65,7 +67,8 @@ gulp.task('test', ['karma', 'jshint']);
 gulp.task('connect', function(){
   connect.server({
     root: 'dist',
-    livereload: true
+    livereload: true,
+    port: 8081
   });
 });
 

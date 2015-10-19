@@ -25,28 +25,28 @@
           <div role="tabpanel" class="tab-pane active" id="form">
             <div>
 
-              <form class="col-md-6 well">
+              <form class="col-md-6 well" ng-controller="FormController as vm" ng-submit="vm.addGuest(vm.currentGuest); vm.newGuest()">
                 <div class="form-group">
                   <label for="guest-name">Guest Name</label>
-                  <input type="text" class="form-control" id="guest-name" placeholder="">
+                  <input type="text" class="form-control" id="guest-name" placeholder="" ng-model="vm.currentGuest.name">
                 </div>
                 <div class="form-group">
                   <label for="transition-date">Transition Date</label>
-                  <input type="date" class="form-control" id="transition-date" placeholder="">
+                  <input type="date" class="form-control" id="transition-date" placeholder="" ng-model="vm.currentGuest.transitionDate">
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="pickup-dropoff" id="pickup" value="pickup" checked>
+                    <input type="radio" name="pickup-dropoff" id="pickup" ng-model="vm.currentGuest.transportation" ng-value="vm.currentGuest.PICK_UP">
                     Pick-up
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="pickup-dropoff" id="dropoff" value="dropoff">
+                    <input type="radio" name="pickup-dropoff" id="dropoff" ng-model="vm.currentGuest.transportation" ng-value="vm.currentGuest.DROP_OFF">
                     Drop-off
                   </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="vm.currentGuest.isPickUp()">
                   <label for="location">Location</label>
                   <textarea class="form-control" id="location"></textarea>
                 </div>
@@ -54,20 +54,20 @@
               </form>
 
               <!-- bound display -->
-              <div ng-show="false" class="col-md-6 well">
-                <div ng-show="false" class="form-group">
+              <div ng-show="true" class="col-md-6 well">
+                <div ng-show="true" class="form-group">
                   <label>Name: </label>
                   John Harvard
                 </div>
-                <div ng-show="false" class="form-group">
+                <div ng-show="true" class="form-group">
                   <label>Transition Date: </label>
                   today!
                 </div>
-                <div ng-show="false" class="form-group">
+                <div ng-show="true" class="form-group">
                   <label>Status: </label>
                   drop-off
                 </div>
-                <div ng-show="false" class="form-group">
+                <div ng-show="true" class="form-group">
                   <label>Location: </label>
                   right here
                 </div>
