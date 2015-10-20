@@ -11,9 +11,10 @@ var connect = require('gulp-connect');
 gulp.task('buildApp', function(){
   return gulp.src([
     'src/js/guest.js',
+    'src/js/storage.js',
     'src/js/app.js'])
     .pipe(concat('app.js'))
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(gulp.dest('dist'))
     .pipe(connect.reload());
 });

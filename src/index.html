@@ -36,19 +36,19 @@
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="pickup-dropoff" id="pickup" ng-model="vm.currentGuest.transportation" ng-value="vm.currentGuest.PICK_UP">
+                    <input type="radio" name="pickup-dropoff" id="pickup" ng-model="vm.currentGuest.transportation" ng-value="vm.currentGuest.PICK_UP" ng-change="vm.currentGuest.setPickUp()">
                     Pick-up
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="pickup-dropoff" id="dropoff" ng-model="vm.currentGuest.transportation" ng-value="vm.currentGuest.DROP_OFF">
+                    <input type="radio" name="pickup-dropoff" id="dropoff" ng-model="vm.currentGuest.transportation" ng-value="vm.currentGuest.DROP_OFF" ng-change="vm.currentGuest.setDropOff()">
                     Drop-off
                   </label>
                 </div>
                 <div class="form-group" ng-show="vm.currentGuest.isPickUp()">
                   <label for="location">Location</label>
-                  <textarea class="form-control" id="location"></textarea>
+                  <textarea class="form-control" id="location" ng-model="vm.currentGuest.pickupLocation"></textarea>
                 </div>
                 <button type="submit" class="btn">Submit</button>
               </form>
@@ -77,10 +77,11 @@
           </div>
 
           <!-- Tab pane 2 -->
-          <div role="tabpanel" class="tab-pane" id="guests">
+          <div role="tabpanel" class="tab-pane" id="guests" ng-controller="TabController as vm" >
             <ul class="list-unstyled">
-              <li>
-
+              Hello here!
+              <li ng-repeat="guest in vm.guests">
+                [{{$index + 1}}] {{guest.name}} status: {{guest.status}}.
               </li>
             </ul>
           </div>
