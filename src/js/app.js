@@ -44,7 +44,9 @@ app.controller('FormController', ['storageService', '$rootScope', 'GUESTS_DATA_C
     $rootScope.$broadcast(GUESTS_DATA_CHANGE_EVENT);
   };
 
-
+  vm.switch = function() {
+    $('a[href="#guests"]').tab('show');
+  };
 
   vm.newGuest();
 }]);

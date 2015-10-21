@@ -25,7 +25,7 @@
           <div role="tabpanel" class="tab-pane active" id="form">
             <div>
 
-              <form class="col-md-6 well" ng-controller="FormController as vm" ng-submit="vm.addGuest(vm.currentGuest); vm.newGuest()">
+              <form class="col-md-6 well" ng-controller="FormController as vm" ng-submit="vm.addGuest(vm.currentGuest); vm.newGuest(); vm.switch()">
                 <div class="form-group">
                   <label for="guest-name">Guest Name</label>
                   <input type="text" class="form-control" id="guest-name" placeholder="" ng-model="vm.currentGuest.name">
@@ -79,7 +79,7 @@
           <!-- Tab pane 2 -->
           <div role="tabpanel" class="tab-pane" id="guests" ng-controller="TabController as vm" >
             <ul class="list-unstyled">
-              <li ng-repeat="guest in vm.guests">
+              <li ng-repeat="guest in vm.guests track by $index">
                 [{{$index + 1}}] {{guest.name}} status: {{guest.status}}.
               </li>
             </ul>
