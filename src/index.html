@@ -89,10 +89,10 @@
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Transition Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th style="width:30%">Name</th>
+                        <th style="width:30%">Transition Date</th>
+                        <th style="width:20%">Status</th>
+                        <th style="width:20%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,8 +107,11 @@
                             {{ guest.name }}
                           </span>
                         </td>
-                        <td>{{guest.transitionDate}}</td>
-
+                        <td>
+                          <span editable-date="guest.transitionDate" e-name="transitionDate" e-form="rowform">
+                            {{guest.transitionDate | date:'MM/dd/yyyy' }}
+                          </span>
+                        </td>
                         <td>
                           <span editable-select="guest.status" e-name="status" e-form="rowform" e-ng-options="s for s in vm.getNextStatus(guest)">
                             {{ guest.status }}
@@ -117,7 +120,7 @@
 
                         <td style="white-space: nowrap">
                           <!-- form -->
-                          <form editable-form name="rowform" onbeforesave="vm.updateGuest($data, guest)" ng-show="rowform.$visible" class="form-buttons form-inline">
+                          <form editable-form name="rowform" onbeforesave="vm.updateGuest($data, guest)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
                             <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                               Save
                             </button>
@@ -133,12 +136,10 @@
                     </tr>
                 </tbody>
             </table>
-
           </div>
 
         </div>
       </div>
     </div>
-
   </body>
 </html>

@@ -24,6 +24,7 @@ gulp.task('buildVendor', function(){
     'bower_components/jquery/dist/jquery.min.js',
     'bower_components/bootstrap/dist/js/bootstrap.min.js',
     'bower_components/angular/angular.min.js',
+    //forgot to include file below, which caused the double-line inline edit behavior
     'bower_components/angular-xeditable/dist/js/xeditable.min.js'])
     .pipe(concat('vendors.js'))
     .pipe(uglify())
@@ -32,7 +33,9 @@ gulp.task('buildVendor', function(){
 
 gulp.task('buildCSS', function(){
   return gulp.src([
-    'bower_components/bootstrap/dist/css/bootstrap.css',
+    'bower_components/bootstrap/dist/css/bootstrap.min.css',
+    'bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
+    'bower_components/angular-xeditable/dist/css/xeditable.css',
     'src/css/**/*.css'])
   .pipe(concat('styles.css'))
   .pipe(minifycss())

@@ -105,6 +105,14 @@ Storage.prototype.load = function() {
         if (dataMapLoaded.hasOwnProperty(k)) {
           var guest = new Guest();
           angular.extend(guest, dataMapLoaded[k]);
+
+          //set transitionDate to be Date type
+          //this change is necessary for using angular-xeditable
+          //to edit Date inline
+          if (dataMapLoaded[k].transitionDate) {
+            guest.transitionDate = new Date(dataMapLoaded[k].transitionDate);
+          }
+
           this.map[k] = guest;
         }
       }

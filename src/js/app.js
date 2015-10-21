@@ -42,7 +42,8 @@ app.controller('FormController', ['storageService', '$rootScope', 'GUESTS_DATA_C
   };
 
   vm.addGuest = function(guest) {
-    console.log(guest.toString());
+    console.log("adding guest " + guest.toString());
+    console.log("guest transition of date type " + (guest.transitionDate instanceof Date));
     storageService.add(guest);
 
     $rootScope.$broadcast(GUESTS_DATA_CHANGE_EVENT);
@@ -64,9 +65,10 @@ app.controller('TabController', ['storageService', '$scope', 'GUESTS_DATA_CHANGE
   vm.guests = storageService.getAll();
 
   vm.updateGuest = function(updates, guest) {
-    console.log('updating ' + JSON.stringify(guest));
-    angular.extend(updates, guest);
-    storageService.update(updates);
+    console.log('updating ' + JSON.stringify(updates));
+    angular.extend(guest, updates);
+    storageService.update(guest);
+    console.log('updated ' + JSON.stringify(guest));
   };
 
   vm.deleteGuest = function(guest) {
