@@ -37,7 +37,7 @@ Storage.prototype.update = function(item) {
   if (item.id) {
     //overwrite any existing entry
     //add the item if not existing before
-    this.map[item.id] = item;
+    this.map[item.id] = item; //not necessary to re-put into the map?
     this.persist();
 
   } else {
@@ -98,7 +98,17 @@ Storage.prototype.load = function() {
     console.log("loaded " + persistedData);
 
     if (persistedData) {
-      this.map = JSON.parse(persistedData);
+      //this.map = JSON.parse(persistedData);
+      this.map = {};
+      var dataMapLoaded = JSON.parse(persistedData);
+      for (var k in dataMapLoaded) {
+        if (dataMapLoaded.hasOwnProperty(k)) {
+          var guest = new Guest();
+          angular.extend(guest, dataMapLoaded[k]);
+          this.map[k] = guest;
+        }
+      }
+
     }
   }
 };

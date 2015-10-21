@@ -42,6 +42,17 @@ Guest.prototype.changeStatus = function() {
   throw new Error("unknown status " + this.status);
 };
 
+Guest.prototype.getNextStatusCandidates = function() {
+  if (this.status === this.STATUS_PICK_UP ||
+      this.status === this.STATUS_DROP_OFF) {
+        return [this.status, this.STATUS_ARRIVED];
+  } else if (this.status === this.STATUS_ARRIVED) {
+    return [this.status, this.STATUS_PICK_UP];
+  }
+
+  throw new Error("unknown status " + this.status);
+};
+
 //toString is not particularly useful here, because when parse is called
 //on what was stringify'ed, the Guest type is lost
 Guest.prototype.toString = function() {

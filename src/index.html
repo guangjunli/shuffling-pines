@@ -92,7 +92,7 @@
                         <th>Name</th>
                         <th>Transition Date</th>
                         <th>Status</th>
-                        <th></th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,15 +102,33 @@
                     <tr ng-repeat="guest in vm.guests | filter:{deleted: false} track by guest.id">
                     -->
                     <tr ng-repeat="guest in vm.guests | filter:vm.filterOutDeleted track by guest.id">
-
-                        <td>{{guest.name}}</td>
+                        <td>
+                          <span editable-text="guest.name" e-name="name" e-form="rowform" e-required>
+                            {{ guest.name }}
+                          </span>
+                        </td>
                         <td>{{guest.transitionDate}}</td>
-                        <td class="text-right">{{guest.status}}</td>
-                        <td class="text-center">
-                            <button class="btn btn-xs btn-primary"
-                                    ng-click="vm.deleteGuest(guest)">
-                                Delete
+
+                        <td>
+                          <span editable-select="guest.status" e-name="status" e-form="rowform" e-ng-options="s for s in vm.getNextStatus(guest)">
+                            {{ guest.status }}
+                          </span>
+                        </td>
+
+                        <td style="white-space: nowrap">
+                          <!-- form -->
+                          <form editable-form name="rowform" onbeforesave="vm.updateGuest($data, guest)" ng-show="rowform.$visible" class="form-buttons form-inline">
+                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                              Save
                             </button>
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                              Cancel
+                            </button>
+                          </form>
+                          <div class="buttons" ng-show="!rowform.$visible">
+                            <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
+                            <button class="btn btn-danger" ng-click="vm.deleteGuest(guest)">Delete</button>
+                          </div>
                         </td>
                     </tr>
                 </tbody>
