@@ -48,7 +48,15 @@ Storage.prototype.update = function(item) {
 Storage.prototype.getAll = function() {
   //convert the map to an array of items
   //console.log("in storage, returning all " + JSON.stringify(this.map));
-  var dataArray = Object.keys(this.map).map(key => this.map[key]);
+
+  //ES6
+  //var dataArray = Object.keys(this.map).map(key => this.map[key]);
+  var dataArray = [];
+  for (var k in this.map) {
+    if (this.map.hasOwnProperty(k)) {
+      dataArray.push(this.map[k]);
+    }
+  }
 
   return dataArray;
 };
@@ -63,9 +71,20 @@ Storage.prototype.persist = function() {
   }
 };
 
+Storage.prototype.clear = function() {
+  this.map = {};
+
+  if (this.persistentStorage) {
+    this.persistentStorage.removeItem(LOCAL_STORAGE_KEY);
+  }
+};
+
 Storage.prototype.load = function() {
+  console.log("loading from persistent storage...");
   if (this.persistentStorage) {
     var persistedData = this.persistentStorage[LOCAL_STORAGE_KEY];
+    console.log("loaded " + persistedData);
+
     if (persistedData) {
       this.map = JSON.parse(persistedData);
     }
