@@ -80,9 +80,42 @@
           <div role="tabpanel" class="tab-pane" id="guests" ng-controller="TabController as vm" >
             <ul class="list-unstyled">
               <li ng-repeat="guest in vm.guests track by $index">
-                [{{$index + 1}}] {{guest.name}} status: {{guest.status}}.
+                <!-- why would this output [object Object] -->
+                <!-- the reason, which was found out later, was that the parse'd data lost Guest type info -->
+                <!--{{guest.toString();}} -->
               </li>
             </ul>
+
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Transition Date</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <!-- needed to write custom filter to check if 'deleted' is undefined. -->
+                  <!-- also note the filter function needs to be referenced with 'vm.' prefix -->
+                  <!--
+                    <tr ng-repeat="guest in vm.guests | filter:{deleted: false} track by guest.id">
+                    -->
+                    <tr ng-repeat="guest in vm.guests | filter:vm.filterOutDeleted track by guest.id">
+
+                        <td>{{guest.name}}</td>
+                        <td>{{guest.transitionDate}}</td>
+                        <td class="text-right">{{guest.status}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-xs btn-primary"
+                                    ng-click="vm.deleteGuest(guest)">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
           </div>
 
         </div>

@@ -14,6 +14,10 @@ app.factory('storageService', function() {
         storage.update(item);
       },
 
+      delete: function(item) {
+        storage.delete(item);
+      },
+
       getAll: function() {
         //forgot the return, which caused the calling client (controller)
         //getting undefined
@@ -59,8 +63,17 @@ app.controller('TabController', ['storageService', '$scope', 'GUESTS_DATA_CHANGE
   var vm = this;
   vm.guests = storageService.getAll();
 
+  vm.deleteGuest = function(guest) {
+    console.log('deleting ' + JSON.stringify(guest));
+    storageService.delete(guest);
+  };
+
   $scope.$on(GUESTS_DATA_CHANGE_EVENT, function() {
     vm.guests = storageService.getAll();
   });
+
+  vm.filterOutDeleted = function(guest) {
+    return angular.isUndefined(guest.deleted) || guest.deleted === false;
+  };
 
 }]);

@@ -45,6 +45,18 @@ Storage.prototype.update = function(item) {
   }
 };
 
+Storage.prototype.delete = function(item) {
+  if (item.id) {
+    var itemFound = this.map[item.id];
+    if (itemFound) {
+      itemFound.deleted = true;
+      this.persist();
+    }
+  } else {
+    throw new Error('item must have id property');
+  }
+};
+
 Storage.prototype.getAll = function() {
   //convert the map to an array of items
   //console.log("in storage, returning all " + JSON.stringify(this.map));

@@ -5,6 +5,7 @@ var Guest = function(name, transitionDate) {
   this.transportation = this.PICK_UP;
   this.pickupLocation = '';
   this.status = this.STATUS_PICK_UP;
+  this.deleted = false;
 };
 
 Guest.prototype.PICK_UP = 'PICK_UP';
@@ -41,6 +42,8 @@ Guest.prototype.changeStatus = function() {
   throw new Error("unknown status " + this.status);
 };
 
+//toString is not particularly useful here, because when parse is called
+//on what was stringify'ed, the Guest type is lost
 Guest.prototype.toString = function() {
   return ['guest: name=', this.name, ', transitionDate=', this.transitionDate,
     ', transportation=', this.transportation, ', pickup location=', this.pickupLocation,
