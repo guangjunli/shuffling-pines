@@ -72,8 +72,11 @@ app.controller('TabController', ['storageService', '$scope', 'GUESTS_DATA_CHANGE
   };
 
   vm.deleteGuest = function(guest) {
-    console.log('deleting ' + JSON.stringify(guest));
-    storageService.delete(guest);
+    var confirmed = window.confirm("Do you really want to delete guest " + guest.name);
+    if (confirmed) {
+      console.log('deleting ' + JSON.stringify(guest));
+      storageService.delete(guest);
+    }
   };
 
   $scope.$on(GUESTS_DATA_CHANGE_EVENT, function() {

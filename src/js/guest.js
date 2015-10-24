@@ -31,6 +31,10 @@ Guest.prototype.isPickUp = function() {
   return this.transportation === this.PICK_UP;
 };
 
+Guest.prototype.canChangePickUpLocation = function() {
+  return this.transportation === this.PICK_UP && this.status === this.STATUS_PICK_UP;
+};
+
 Guest.prototype.changeStatus = function() {
   if (this.status === this.STATUS_PICK_UP ||
       this.status === this.STATUS_DROP_OFF) {
