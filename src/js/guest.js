@@ -11,9 +11,9 @@ var Guest = function(name, transitionDate) {
 Guest.prototype.PICK_UP = 'PICK_UP';
 Guest.prototype.DROP_OFF = 'DROP_OFF';
 
-Guest.prototype.STATUS_PICK_UP = Guest.prototype.PICK_UP;
-Guest.prototype.STATUS_DROP_OFF = Guest.prototype.DROP_OFF;
-Guest.prototype.STATUS_ARRIVED = 'ARRIVED';
+Guest.prototype.STATUS_PICK_UP = 'pick up';
+Guest.prototype.STATUS_DROP_OFF = 'drop off';
+Guest.prototype.STATUS_ARRIVED = 'arrived';
 
 Guest.prototype.setPickUp = function() {
   this.transportation = this.PICK_UP;
@@ -36,20 +36,22 @@ Guest.prototype.canChangePickUpLocation = function() {
 };
 
 Guest.prototype.changeStatus = function() {
-  if (this.status === this.STATUS_PICK_UP ||
-      this.status === this.STATUS_DROP_OFF) {
-        return this.status = this.STATUS_ARRIVED;
+  if (this.status === this.STATUS_PICK_UP || this.status === this.STATUS_DROP_OFF) {
+    this.status = this.STATUS_ARRIVED;
+    return this.status;
+
   } else if (this.status === this.STATUS_ARRIVED) {
-    return this.status = this.STATUS_PICK_UP;
+    this.status = this.STATUS_PICK_UP;
+    return this.status;
   }
 
   throw new Error("unknown status " + this.status);
 };
 
 Guest.prototype.getNextStatusCandidates = function() {
-  if (this.status === this.STATUS_PICK_UP ||
-      this.status === this.STATUS_DROP_OFF) {
-        return [this.status, this.STATUS_ARRIVED];
+  if (this.status === this.STATUS_PICK_UP || this.status === this.STATUS_DROP_OFF) {
+    return [this.status, this.STATUS_ARRIVED];
+
   } else if (this.status === this.STATUS_ARRIVED) {
     return [this.status, this.STATUS_PICK_UP];
   }
@@ -58,7 +60,8 @@ Guest.prototype.getNextStatusCandidates = function() {
 };
 
 //toString is not particularly useful here, because when parse is called
-//on what was stringify'ed, the Guest type is lost
+//on what was stringify'ed, the Guest type is lost, unless the Guest
+//type is explicitly restored when parsing
 Guest.prototype.toString = function() {
   return ['guest: name=', this.name, ', transitionDate=', this.transitionDate,
     ', transportation=', this.transportation, ', pickup location=', this.pickupLocation,

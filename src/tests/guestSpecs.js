@@ -5,7 +5,6 @@ describe('Guest', function(){
     var guest = new Guest(name, transitionDate);
     expect(guest.name).toEqual(name);
     expect(guest.transitionDate).toEqual(transitionDate);
-    expect(guest.transportation).toBe(Guest.prototype.PICK_UP);
     expect(guest.transportation).toBe(guest.PICK_UP);
   });
 
@@ -25,5 +24,4 @@ describe('Guest', function(){
     newStatus = guest.changeStatus();
     expect(newStatus).toEqual(guest.STATUS_PICK_UP);
   });
-
 });
