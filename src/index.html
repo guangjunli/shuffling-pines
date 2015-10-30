@@ -37,7 +37,10 @@
                 <!-- initially had trouble with transitionDate. CANNOT have dash in variable name -->
                 <div class="form-group" ng-class="{ 'has-error' : newGuestForm.transitionDate.$invalid && !newGuestForm.transitionDate.$pristine }">
                   <label for="transitionDate">Transition Date</label>
-                  <input type="date" class="form-control" name="transitionDate" id="transitionDate" required placeholder="2015-01-01" ng-model="vm.currentGuest.transitionDate">
+
+                  <!-- took out date-placeholder="MM/dd/yyyy" -->
+                  <!-- TODO  look into http://stackoverflow.com/questions/18061757/angular-js-and-html5-date-input-value-how-to-get-firefox-to-show-a-readable-d -->
+                  <input type="date" class="form-control" name="transitionDate" id="transitionDate" required ng-model="vm.currentGuest.transitionDate">
                   <p ng-show="newGuestForm.transitionDate.$invalid && !newGuestForm.transitionDate.$pristine" class="help-block">Transition date is required.</p>
                 </div>
                 <div class="radio">

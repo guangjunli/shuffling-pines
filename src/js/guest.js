@@ -1,7 +1,14 @@
 
 var Guest = function(name, transitionDate) {
   this.name = name;
-  this.transitionDate = transitionDate;
+
+  //use today's date by default
+  if (transitionDate) {
+    this.transitionDate = transitionDate;
+  } else {
+    this.transitionDate = new Date();
+  }
+
   this.transportation = this.PICK_UP;
   this.pickupLocation = '';
   this.status = this.STATUS_PICK_UP;

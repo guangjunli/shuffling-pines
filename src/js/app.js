@@ -37,6 +37,17 @@ app.factory('storageService', function() {
     };
 });
 
+app.directive('datePlaceholder', ['dateFilter', function(dateFilter) {
+    return {
+      restrict: 'A',
+      link: function ($scope, element, attrs) {
+        attrs.$observe('datePlaceholder', function(format) {
+          element.attr('placeholder', dateFilter(new Date(), format));
+        });
+      }
+    };
+}]);
+
 app.controller('FormController', ['storageService', '$rootScope', '$log', 'GUESTS_DATA_CHANGE_EVENT',
   function(storageService, $rootScope, $log, GUESTS_DATA_CHANGE_EVENT) {
 
