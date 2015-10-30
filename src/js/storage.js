@@ -20,7 +20,7 @@ var Storage = function() {
       }
     }
   }
-  this.nextKey = lastKey;
+  this.nextKey = lastKey + 1;
 };
 
 Storage.prototype.add = function(item) {
