@@ -23,6 +23,15 @@ var Storage = function() {
   this.nextKey = lastKey + 1;
 };
 
+Storage.prototype.isEmpty = function() {
+  for (var p in this.map) {
+    if (this.map.hasOwnProperty(p)) {
+       return false;
+     }
+  }
+  return true;
+};
+
 Storage.prototype.add = function(item) {
   if (item.id) {
     this.map[item.id] = item;
@@ -118,6 +127,6 @@ Storage.prototype.persist = function() {
   if (this.persistentStorage) {
     this.persistentStorage[LOCAL_STORAGE_KEY] = JSON.stringify(this.map);
 
-    //console.log("persisted all guests " + this.persistentStorage[LOCAL_STORAGE_KEY]);
+    console.log("saved to persistent storage: " + this.persistentStorage[LOCAL_STORAGE_KEY]);
   }
 };

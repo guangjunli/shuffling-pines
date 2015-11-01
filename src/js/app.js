@@ -12,6 +12,19 @@ app.value('GUESTS_DATA_CHANGE_EVENT', 'GUESTS_DATA_CHANGE');
 app.factory('storageService', function() {
     var storage = new Storage();
 
+    if (storage.isEmpty()) {
+
+      var guest1 = new Guest("First Guest", new Date(2015,9,30));
+      guest1.pickupLocation = 'Train Station';
+
+      storage.add(guest1);
+
+      var guest2 = new Guest("Second Guest");
+      guest2.setDropOff();
+      guest2.changeStatus();
+
+      storage.add(guest2);
+    }
     return {
       add: function(item) {
         storage.add(item);
@@ -106,13 +119,16 @@ app.controller('TabController', ['storageService', '$scope', '$log', 'GUESTS_DAT
   };
 
   vm.getNextStatus = function(guest) {
-    console.log('next status for guest ' + JSON.stringify(guest));
-    //again, the Guest type info is lost at this point, so the line below
+    //again here, the Guest type info is lost at this point, so the line below
     //reports TypeError: guest.getNextStatusCandidates is not a function
     //console.log("next status " + JSON.stringify(guest.getNextStatusCandidates()));
-
     //refactored the load method in Storage to convert what's loaded as
-    //proper Guest object, so that the code above/below works :)
+    //proper Guest object, so that the code below works :)
+
+    //TODO second issue is with usage of xeditable: http://vitalets.github.io/angular-xeditable/#editable-row
+    //as long as edit is initiated on a row, even after it's cancelled, this function keeps getting called
+    //therefore the log statement below executed
+
     $log.debug("next status for guest: " + JSON.stringify(guest) + " is: " + JSON.stringify(guest.getNextStatusCandidates()));
 
     return guest.getNextStatusCandidates();
