@@ -28,7 +28,7 @@
               <!-- escaped the quote $('a[href=&quot;guests&quot;]').tab('show') but the action is not performed -->
 
               <form name="newGuestForm" class="col-md-6 well" novalidate ng-controller="FormController as vm"
-                    ng-submit="vm.addGuest(vm.currentGuest); vm.newGuest(); newGuestForm.$setPristine(); vm.switch()">
+                    ng-submit="vm.addGuest(vm.currentGuest); vm.newGuest(); newGuestForm.$setPristine(); vm.switchToGuestList()">
                 <div class="form-group" ng-class="{ 'has-error' : newGuestForm.name.$invalid && !newGuestForm.name.$pristine }">
                   <label for="guest-name">Guest Name</label>
                   <input type="text" class="form-control" name="name" id="guest-name" required placeholder="" ng-model="vm.currentGuest.name">

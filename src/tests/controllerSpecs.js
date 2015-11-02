@@ -54,12 +54,107 @@ describe('Controllers', function() {
     it('should have two known guests to start with', function() {
       console.log("checking first two guests");
       var allGuests = tabController.guests;
-      expect(allGuests.length).not.toBeLessThan(2);
+      //expect(allGuests.length).not.toBeLessThan(2);
+
+      expect(allGuests.length).toEqual(2);
       var guest1 = allGuests[0];
       expect(guest1.name).toEqual('First Guest');
 
+      var guest2 = allGuests[1];
+      expect(guest2.name).toEqual('Second Guest');
     });
 
+    it('should have added guest through FormController', function() {
+      var newGuestName = "Third Guest";
+      var newGuestTransitionDate = new Date(2015,01,01);
+      formController.newGuest(newGuestName, newGuestTransitionDate);
+      formController.addGuest(formController.currentGuest);
+
+      var allGuests = tabController.guests;
+      expect(allGuests.length).toEqual(3);
+      var thirdGuest = allGuests[2];
+      expect(thirdGuest.name).toEqual(newGuestName);
+      expect(thirdGuest.transitionDate).toEqual(newGuestTransitionDate);
+      expect(thirdGuest.transportation).toEqual(thirdGuest.PICK_UP);
+    });
+
+    it('should have updated guest properly', function() {
+      //added new guest
+      var newGuestName = "Third Guest";
+      var newGuestTransitionDate = new Date(2015,01,01);
+      formController.newGuest(newGuestName, newGuestTransitionDate);
+      formController.addGuest(formController.currentGuest);
+
+      var allGuests = tabController.guests;
+      expect(allGuests.length).toEqual(3);
+      var thirdGuest = allGuests[2];
+      expect(thirdGuest.name).toEqual(newGuestName);
+      expect(thirdGuest.transitionDate).toEqual(newGuestTransitionDate);
+      expect(thirdGuest.transportation).toEqual(thirdGuest.PICK_UP);
+      expect(thirdGuest.status).toEqual(thirdGuest.STATUS_PICK_UP);
+
+      //update the guest
+      var location = "South Station";
+      tabController.updateGuest(
+        {pickupLocation: location, status: thirdGuest.STATUS_ARRIVED},
+        thirdGuest);
+
+      //get the guest again
+      var thirdGuestUpdated = allGuests[2];
+      expect(thirdGuestUpdated.name).toEqual(thirdGuest.name);
+      expect(thirdGuestUpdated.transitionDate).toEqual(thirdGuestUpdated.transitionDate);
+      expect(thirdGuestUpdated.transportation).toEqual(thirdGuest.PICK_UP);
+      expect(thirdGuestUpdated.pickupLocation).toEqual(location);
+      expect(thirdGuestUpdated.status).toEqual(thirdGuest.STATUS_ARRIVED);
+    });
+
+    it('should have kept guest but changed its deleted flag upon deletion', function() {
+      //added new guest
+      var newGuestName = "Third Guest";
+      var newGuestTransitionDate = new Date(2015,01,01);
+      formController.newGuest(newGuestName, newGuestTransitionDate);
+      formController.addGuest(formController.currentGuest);
+
+      var allGuests = tabController.guests;
+      expect(allGuests.length).toEqual(3);
+      var thirdGuest = allGuests[2];
+      expect(thirdGuest.name).toEqual(newGuestName);
+      expect(thirdGuest.transitionDate).toEqual(newGuestTransitionDate);
+      expect(thirdGuest.transportation).toEqual(thirdGuest.PICK_UP);
+      expect(thirdGuest.status).toEqual(thirdGuest.STATUS_PICK_UP);
+
+      //TODO not sure if the delete confirmation should be in TabController
+      //anyway mocking the action here
+
+      //cancel the delete
+      spyOn(window, "confirm").and.returnValue(false);
+
+      //delete the guest
+      tabController.deleteGuest(thirdGuest);
+
+      //get the guest again
+      var thirdGuestDeleted = allGuests[2];
+      expect(thirdGuestDeleted.name).toEqual(thirdGuest.name);
+      expect(thirdGuestDeleted.transitionDate).toEqual(thirdGuestDeleted.transitionDate);
+      expect(thirdGuestDeleted.transportation).toEqual(thirdGuest.PICK_UP);
+      expect(thirdGuestDeleted.deleted).toEqual(false);
+
+      //went ahead with the delete
+      //resetting the spy to return true
+      //likely alternative is to have a separate test for confirming yes to deletion
+      window.confirm.and.returnValue(true);
+
+      //delete the guest
+      tabController.deleteGuest(thirdGuest);
+
+      //get the guest again
+      var thirdGuestDeleted = allGuests[2];
+      expect(thirdGuestDeleted.name).toEqual(thirdGuest.name);
+      expect(thirdGuestDeleted.transitionDate).toEqual(thirdGuestDeleted.transitionDate);
+      expect(thirdGuestDeleted.transportation).toEqual(thirdGuest.PICK_UP);
+      expect(thirdGuestDeleted.deleted).toEqual(true);
+
+    });
 
   });
 });

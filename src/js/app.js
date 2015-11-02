@@ -81,7 +81,7 @@ app.controller('FormController', ['storageService', '$rootScope', '$log', 'GUEST
 
   //TODO see if there is better way to handle switching tab
   //without calling into controller code
-  vm.switch = function() {
+  vm.switchToGuestList = function() {
     $('a[href="#guests"]').tab('show');
   };
 
