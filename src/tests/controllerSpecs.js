@@ -148,7 +148,7 @@ describe('Controllers', function() {
       tabController.deleteGuest(thirdGuest);
 
       //get the guest again
-      var thirdGuestDeleted = allGuests[2];
+      thirdGuestDeleted = allGuests[2];
       expect(thirdGuestDeleted.name).toEqual(thirdGuest.name);
       expect(thirdGuestDeleted.transitionDate).toEqual(thirdGuestDeleted.transitionDate);
       expect(thirdGuestDeleted.transportation).toEqual(thirdGuest.PICK_UP);

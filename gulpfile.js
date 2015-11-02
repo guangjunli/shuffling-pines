@@ -86,4 +86,11 @@ gulp.task('watch', function(){
 
 // *******************************************
 
-gulp.task('default', ['build', 'test', 'watch', 'connect']);
+// intended to run at dev time
+gulp.task('all', ['build', 'test', 'watch', 'connect']);
+
+// *******************************************
+
+// intended to be run by TA/Grader
+// livereload is not necessary here
+gulp.task('default', ['connect']);
